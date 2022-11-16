@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: workloads
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: workloads
+  labels:
+    app: nginx
+    chaosmonkeytarget: "yes"
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+        chaosmonkeytarget: "yes" 
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
